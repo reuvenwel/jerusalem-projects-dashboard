@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+<script>
+if(sessionStorage.getItem('auth')!=='1'){
+  document.open();
+  document.write('<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>\u05DB\u05E0\u05D9\u05E1\u05D4</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1E3A5F,#2E6BA8);min-height:100vh;display:flex;align-items:center;justify-content:center;direction:rtl}.box{background:white;border-radius:16px;padding:44px 52px;text-align:center;width:340px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.title{font-size:22px;font-weight:800;color:#1E3A5F;margin-bottom:4px}.sub{font-size:12px;color:#999;margin-bottom:28px;line-height:1.6}input{width:100%;padding:12px;border:2px solid #dde3ed;border-radius:10px;font-size:17px;text-align:center;letter-spacing:3px;outline:none;direction:ltr}input:focus{border-color:#2E6BA8}button{margin-top:13px;width:100%;padding:12px;background:#1E3A5F;color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}button:hover{background:#2E6BA8}.err{color:#e74c3c;font-size:12px;margin-top:10px;min-height:16px;font-weight:600}</style></head><body><div class="box"><div class="title">\u05E1\u05D5\u05DC\u05D1\u05E8\u05D2 \u05D9\u05D9\u05E2\u05D5\u05E5</div><div class="sub">\u05D3\u05E9\u05D1\u05D5\u05E8\u05D3 \u05D1\u05E7\u05E8\u05EA \u05DC\u05D5\u05D7\u05D5\u05EA \u05D6\u05DE\u05E0\u05D9\u05DD<br>\u05E2\u05D9\u05E8\u05D9\u05D9\u05EA \u05D9\u05E8\u05D5\u05E9\u05DC\u05D9\u05DD</div><input id="pw" type="password" placeholder="\u05E1\u05D9\u05E1\u05DE\u05D0"><button id="btn">\u05DB\u05E0\u05D9\u05E1\u05D4</button><div class="err" id="err"></div></div><script>var i=document.getElementById("pw"),b=document.getElementById("btn"),e=document.getElementById("err");i.focus();function go(){if(i.value==="sohlberg0526"){sessionStorage.setItem("auth","1");location.reload();}else{e.textContent="\u05E1\u05D9\u05E1\u05DE\u05D0 \u05E9\u05D2\u05D5\u05D9\u05D4";i.value="";i.focus();setTimeout(function(){e.textContent="";},1500);}}b.onclick=go;i.onkeydown=function(ev){if(ev.key==="Enter")go();};<\/script></body></html>');
+  document.close();
+}
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>דשבורד בקרת לוחות זמנים – עיריית ירושלים</title>
-<style>
-#pw-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1E3A5F 0%,#2E6BA8 100%);display:flex;align-items:center;justify-content:center;z-index:99999;direction:rtl}
-#pw-box{background:white;border-radius:16px;padding:40px 48px;text-align:center;width:320px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-#pw-logo{font-size:24px;font-weight:800;color:#1E3A5F;margin-bottom:4px}
-#pw-sub{font-size:12px;color:#888;margin-bottom:26px;line-height:1.6}
-#pw-input{width:100%;padding:11px 16px;border:2px solid #dde3ed;border-radius:10px;font-size:16px;text-align:center;letter-spacing:3px;outline:none;direction:ltr;box-sizing:border-box}
-#pw-input:focus{border-color:#2E6BA8}
-#pw-btn{margin-top:12px;width:100%;padding:11px;background:#1E3A5F;color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
-#pw-btn:hover{background:#2E6BA8}
-#pw-err{color:#e74c3c;font-size:12px;margin-top:10px;min-height:18px;font-weight:600}
-</style>
 <script>/**
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/chart.js@4.4.0/dist/chart.umd.js
@@ -145,15 +142,6 @@ footer{text-align:center;padding:12px;font-size:11px;color:#999;border-top:1px s
 </style>
 </head>
 <body>
-
-<div id="pw-overlay">
-  <div id="pw-box">
-    <div id="pw-logo">סולברג ייעוץ</div>
-    <div id="pw-sub">דשבורד בקרת לוחות זמנים<br>עיריית ירושלים</div>
-    <input id="pw-input" type="password" placeholder="סיסמה" autocomplete="off">
-    <button id="pw-btn">כניסה</button>
-    <div id="pw-err"></div>
-  </div>
 </div>
 
 
@@ -654,38 +642,5 @@ function showTab(n,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.cla
 function ft(id,q){q=q.trim().toLowerCase();document.querySelectorAll('#'+id+' tbody tr').forEach(r=>{r.style.display=!q||r.textContent.toLowerCase().includes(q)?'':'none';});}
 </script>
 
-<script>
-(function(){
-  var K='c29obGJlcmcwNTI2';
-  if(sessionStorage.getItem('auth')==='1'){
-    document.getElementById('pw-overlay').style.display='none';
-    return;
-  }
-  var ov  = document.getElementById('pw-overlay');
-  var inp = document.getElementById('pw-input');
-  var err = document.getElementById('pw-err');
-  var btn = document.getElementById('pw-btn');
-  inp.focus();
-  function tryPw(){
-    var val = inp.value.trim();
-    var ok  = false;
-    try { ok = (btoa(val) === K); } catch(e){}
-    if(ok){
-      sessionStorage.setItem('auth','1');
-      ov.style.transition='opacity .4s';
-      ov.style.opacity='0';
-      setTimeout(function(){ov.style.display='none';},400);
-    } else {
-      err.textContent='סיסמה שגויה, נסה שנית';
-      inp.value='';
-      inp.focus();
-      inp.style.borderColor='#e74c3c';
-      setTimeout(function(){inp.style.borderColor='';err.textContent='';},1500);
-    }
-  }
-  btn.onclick = tryPw;
-  inp.onkeydown = function(e){ if(e.key==='Enter') tryPw(); };
-})();
-</script>
 </body>
 </html>
