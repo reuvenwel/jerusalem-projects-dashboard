@@ -15,35 +15,6 @@
 #pw-btn:hover{background:#2E6BA8}
 #pw-err{color:#e74c3c;font-size:12px;margin-top:10px;min-height:18px;font-weight:600}
 </style>
-<script>
-(function(){
-  var K='c29obGJlcmcwNTI2';
-  if(sessionStorage.getItem('auth')==='1'){return;}
-  window.addEventListener('DOMContentLoaded',function(){
-    var ov=document.getElementById('pw-overlay');
-    var inp=document.getElementById('pw-input');
-    var err=document.getElementById('pw-err');
-    inp.focus();
-    function tryPw(){
-      try{
-        if(btoa(inp.value.trim())===K){
-          sessionStorage.setItem('auth','1');
-          ov.style.transition='opacity .4s';
-          ov.style.opacity='0';
-          setTimeout(function(){ov.style.display='none';},400);
-        } else {
-          err.innerHTML='&#x05E1;&#x05D9;&#x05E1;&#x05DE;&#x05D4; &#x05E9;&#x05D2;&#x05D5;&#x05D9;&#x05D4;, &#x05E0;&#x05E1;&#x05D4; &#x05E9;&#x05E0;&#x05D9;&#x05EA;';
-          inp.value=''; inp.focus();
-          inp.style.borderColor='#e74c3c';
-          setTimeout(function(){inp.style.borderColor='';err.innerHTML='';},1500);
-        }
-      } catch(e){ err.innerHTML='Error: '+e.message; }
-    }
-    document.getElementById('pw-btn').onclick=tryPw;
-    inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryPw();});
-  });
-})();
-</script>
 <script>/**
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/chart.js@4.4.0/dist/chart.umd.js
@@ -681,6 +652,40 @@ document.getElementById('tbody-str').innerHTML=DATA.strategic_chariga_rows.filte
 // TABS
 function showTab(n,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('panel-'+n).classList.add('active');btn.classList.add('active');}
 function ft(id,q){q=q.trim().toLowerCase();document.querySelectorAll('#'+id+' tbody tr').forEach(r=>{r.style.display=!q||r.textContent.toLowerCase().includes(q)?'':'none';});}
+</script>
+
+<script>
+(function(){
+  var K='c29obGJlcmcwNTI2';
+  if(sessionStorage.getItem('auth')==='1'){
+    document.getElementById('pw-overlay').style.display='none';
+    return;
+  }
+  var ov  = document.getElementById('pw-overlay');
+  var inp = document.getElementById('pw-input');
+  var err = document.getElementById('pw-err');
+  var btn = document.getElementById('pw-btn');
+  inp.focus();
+  function tryPw(){
+    var val = inp.value.trim();
+    var ok  = false;
+    try { ok = (btoa(val) === K); } catch(e){}
+    if(ok){
+      sessionStorage.setItem('auth','1');
+      ov.style.transition='opacity .4s';
+      ov.style.opacity='0';
+      setTimeout(function(){ov.style.display='none';},400);
+    } else {
+      err.textContent='סיסמה שגויה, נסה שנית';
+      inp.value='';
+      inp.focus();
+      inp.style.borderColor='#e74c3c';
+      setTimeout(function(){inp.style.borderColor='';err.textContent='';},1500);
+    }
+  }
+  btn.onclick = tryPw;
+  inp.onkeydown = function(e){ if(e.key==='Enter') tryPw(); };
+})();
 </script>
 </body>
 </html>
