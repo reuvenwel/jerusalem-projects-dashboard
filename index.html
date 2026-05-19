@@ -4,6 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>דשבורד בקרת לוחות זמנים – עיריית ירושלים</title>
+<style>
+#pw-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1E3A5F 0%,#2E6BA8 100%);display:flex;align-items:center;justify-content:center;z-index:99999;direction:rtl}
+#pw-box{background:white;border-radius:16px;padding:40px 48px;text-align:center;width:320px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+#pw-logo{font-size:24px;font-weight:800;color:#1E3A5F;margin-bottom:4px}
+#pw-sub{font-size:12px;color:#888;margin-bottom:26px;line-height:1.6}
+#pw-input{width:100%;padding:11px 16px;border:2px solid #dde3ed;border-radius:10px;font-size:16px;text-align:center;letter-spacing:3px;outline:none;direction:ltr;box-sizing:border-box}
+#pw-input:focus{border-color:#2E6BA8}
+#pw-btn{margin-top:12px;width:100%;padding:11px;background:#1E3A5F;color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
+#pw-btn:hover{background:#2E6BA8}
+#pw-err{color:#e74c3c;font-size:12px;margin-top:10px;min-height:18px;font-weight:600}
+</style>
+<script>
+(function(){
+  var HASH= + PASSWORD_HASH + ;
+  async function sha256(s){
+    var b=new TextEncoder().encode(s);
+    var h=await crypto.subtle.digest('SHA-256',b);
+    return Array.from(new Uint8Array(h)).map(function(x){return x.toString(16).padStart(2,'0')}).join('');
+  }
+  if(sessionStorage.getItem('auth')==='1'){return;}
+  window.addEventListener('DOMContentLoaded',function(){
+    var ov=document.getElementById('pw-overlay');
+    var inp=document.getElementById('pw-input');
+    var err=document.getElementById('pw-err');
+    inp.focus();
+    document.getElementById('pw-btn').onclick=tryPw;
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryPw();});
+    async function tryPw(){
+      var h=await sha256(inp.value.trim());
+      if(h===HASH){
+        sessionStorage.setItem('auth','1');
+        ov.style.transition='opacity .3s';
+        ov.style.opacity='0';
+        setTimeout(function(){ov.style.display='none';},300);
+      } else {
+        err.textContent='סיסמה שגויה, נסה שנית';
+        inp.value='';inp.focus();
+        inp.style.borderColor='#e74c3c';
+        setTimeout(function(){inp.style.borderColor='';},1000);
+      }
+    }
+  });
+})();
+</script>
 <script>/**
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/chart.js@4.4.0/dist/chart.umd.js
@@ -134,6 +178,17 @@ footer{text-align:center;padding:12px;font-size:11px;color:#999;border-top:1px s
 </style>
 </head>
 <body>
+
+<div id="pw-overlay">
+  <div id="pw-box">
+    <div id="pw-logo">סולברג ייעוץ</div>
+    <div id="pw-sub">דשבורד בקרת לוחות זמנים<br>עיריית ירושלים</div>
+    <input id="pw-input" type="password" placeholder="סיסמה" autocomplete="off">
+    <button id="pw-btn">כניסה</button>
+    <div id="pw-err"></div>
+  </div>
+</div>
+
 
 <header>
   <div class="logo-area">
